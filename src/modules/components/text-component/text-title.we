@@ -1,0 +1,37 @@
+<template>
+	<div>
+		<a href="{{textdata.link}}" style="width:{{width}};">
+			<text class="text" style="width:{{width}};"> {{textdata.title}} </text>
+		</a>
+	</div>
+</template>
+
+<style>
+	.text{
+		margin-top: 20;
+		margin-left: 20;
+		height: 63;
+		text-align: center;
+		color: #1a1a1a;
+		font-size: 32;
+		/*background-color: red;*/
+		padding-top: 15;
+	}
+</style>
+
+<script>
+	module.exports = {
+		data:{
+			width: 20,
+			height: 20,
+			textdata:{
+				title: '',
+				link: ''
+			}
+		},
+		created: function () {
+			var util = require("../../../util.js");
+			this.width = util.deviceWidth(this) - 40;
+		}
+	}
+</script>

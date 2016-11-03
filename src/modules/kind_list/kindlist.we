@@ -1,0 +1,176 @@
+<template>
+	<div style="background-color:white; flex-direction:row" >
+		<list class="list" style="height:{{deviceHeight}};">
+			<cell repeat="{{(k , v) in results}}">
+				<div class="{{ v.selected ? 'selectedItem' : 'item'}}" index="{{k}}" onclick="{{cellDidSelected}}">
+					<text class="itemText"> {{v.selected + '~~~' + lastSelectedIndex}} </text>
+				</div>
+			</cell>
+		</list>
+
+		<scroller style="width:{{scrollertWidth}}; height:{{deviceHeight}};" class="scroller">
+			<div style="flex-direction:row;"> 
+				<div repeat="{{v in children}}" >
+					<div class="subKind" style="width:{{subKindWidth}}; height:{{subKindWidth + 30}}" kindid="{{v.id}}" onclick="kindClicked">
+						<img src="{{v.icon}}" class="img" style="width:{{imgWidth}}; height:{{imgWidth}}; border-radius:{{imgWidth/2.0}}; margin-left:{{paddingLeft}}">
+						<text class="subText" style="width:{{subKindWidth}}">{{v.name}}</text>
+					</div>
+				</div>	
+			</div>
+		</scroller>
+	</div>
+</template>
+
+<style>
+	.list{
+		height: 800;
+		width: 200;
+		background-color: #efefef;
+	}
+	.item{
+		height: 100;
+		background-color: white;
+		border-width: 2;
+		border-color: #b14800;
+		border-radius: 0;
+		border-style: solid;
+	}
+	.selectedItem{
+		height: 100;
+		background-color: #0f0;
+		border-width: 2;
+		border-color: #fff;
+		border-left-width: 10;
+		border-left-color: red;
+	}
+
+	.itemText{
+		padding-top: 40;
+		height: 100;
+	}
+
+	.scroller{
+		/*background-color: yellow;*/
+	}
+	.subKind{
+		/*background: red;*/
+	}
+	.subText{
+		margin-top: 10;
+		text-align: center;
+		font-size: 24;
+	}
+	.img{
+		margin-top: 40;
+		background-color: rgba(100, 100, 100, 1);
+	}
+</style>
+
+<script>
+	module.exports = {
+
+		data:{
+			baseURL: '',
+			deviceHeight: 400,
+			deviceWidth: 200,
+			scrollertWidth: 400,
+			subKindWidth: 100,
+			imgWidth: 96,
+			paddingLeft: 20,
+			results: [],
+			children: [],
+			selectedIndex: 0,
+			lastSelectedIndex: 0,
+			itemClass: 'item',
+			selectedItemClass: 'selectedItem',
+			bundleURL: '',
+		},
+
+		created: function () {
+			// body...
+			var util = require("../../util.js");
+			this.baseURL = util.serverPath();
+			this.bundleURL = util.bundleUrl(this);
+			this._getData();
+			//修改组件宽度
+			var util = require("../../util.js");
+			var deviceWidth1 = util.deviceWidth(this);
+			var deviceHeight1 = this.$getConfig().env.deviceHeight;
+			this.deviceHeight = deviceHeight1;
+			this.deviceWidth = deviceWidth1;
+			this.scrollertWidth = deviceWidth1 - 200;
+			this.subKindWidth = (this.scrollertWidth - 0 * 4) / 3.0;
+			// this.imgWidth = this.subKindWidth;
+			this.paddingLeft = (this.subKindWidth - this.imgWidth) / 2.0;
+		},
+
+		methods: {
+			//请求数据
+			_getData: function () {
+				// body...
+				var stream = require("@weex-module/stream");
+				var url = this.baseURL + '/ols/1.1/stores/biz/categories';
+				var that = this;
+				stream.fetch({
+					method: 'GET',
+					url: url,
+					type: 'json'
+				}, function successed(response) {
+					if (response.status == 200) {
+						//获取数据对象
+						var object = response.data;
+						//从新赋值给数据源   这里有点很奇怪 我对原数据没有解析生成JSON了，可能是type的关系
+						that.results = object.results;
+						for (var i = 0; i < that.results.length; i++) {
+							that.results[i].selected = false;
+						}
+						that.results[0].selected = true;
+						that.children = that.results[0].children;
+					}else{
+						console.log(response);
+					}
+				}, function failed(error) {
+					console.log(error);
+				});
+			},
+
+			//cell 点击 （大分类点击）
+			cellDidSelected: function (e) {
+				// body...
+				var object = e.target.attr;
+				var index = object.index;
+				var that = this;
+
+				//两次点击同一个index   不做处理
+				if(index === this.lastSelectedIndex){
+					return;
+				}
+				// this.selectedIndex = index;
+				//拿到当前分类的子分类   赋值给子分类
+				this.children = this.results[index].children;
+				this.results[index].selected = true;
+				this.results[this.lastSelectedIndex].selected = !this.results[index].selected;
+				this.lastSelectedIndex = index;
+
+				//改变当前的样式
+				console.log(index    +   "   ~~~~~~~~~~~~~~~~~~    " + this.lastSelectedIndex);
+				console.log(e.target);
+				console.log(this.results);
+			},
+
+			//子分类被点击
+			kindClicked: function (e) {
+				var object = e.target.attr;
+				var url = this.bundleURL + 'modules/kind_list/' + 'showKindProducts.js?id=' + object.kindid;
+				var navigator = require('@weex-module/navigator');
+				var params = {
+					'url': url,
+					'animation' : 'true',
+				};
+				//navigator.push(params, function(e){});
+			 	this.$openURL(url);
+			}		
+		}
+	}
+	
+</script>

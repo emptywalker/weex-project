@@ -1,0 +1,34 @@
+<template>
+	<div class="wrap">
+		<img  style="width:{{widthHeight}}; height:{{widthHeight * 0.8}}" class="image" src="{{imagedata.image}}" id="{{imagedata.link}}" onclick="imageClicked">
+	</div>
+</template>
+
+<style>
+	.wrap{
+		margin-top: 10
+	}
+</style>
+
+<script>
+	module.exports = {
+		data:{
+			widthHeight: 30,
+			imagedata:{
+				image:'',
+				link:''
+			}
+		},
+		created: function () {
+			var util = require("../../../util.js");
+			this.widthHeight = util.deviceWidth(this);
+		},
+		methods: {
+			imageClicked : function (e) {
+				// body...
+				var modal = require('@weex-module/modal');
+				modal.toast({'message': e.target.src, 'duration': 1});
+			}
+		}
+	}
+</script>

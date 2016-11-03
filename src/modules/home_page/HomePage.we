@@ -1,0 +1,90 @@
+<template>
+	<scroller style="background-color:white" id="content">
+		<input class="inputText" type="text" value="我是首页的输入框" placeholder="等待你的输入...." style="width:{{deviceWidth}}; height:60; ">
+		
+		<div id="body" repeat="{{homeList}}">
+			<!-- 滑动组件 -->
+			<image-slider if="{{name ==='slider'}}" imageList="{{data.images}}" list="{{data.images}}"></image-slider>
+			<!-- 商品组件 -->
+			<product-one if="{{name === 'goods-layout' && data.mode === 'col-1'}}" list="{{data.results}}" ></product-one>
+			<product-two if="{{name === 'goods-layout' && data.mode === 'col-2'}}" list="{{data.results}}"></product-two>
+			<product-three if="{{name ==='goods-layout' && data.mode === 'col-3'}}" list="{{data.results}}"></product-three>
+			<!-- 图片组件 -->
+			<image-one if="{{name === 'link-image'}}" imagedata="{{data}}"></image-one>
+			<image-two if="{{name === 'link-image-two'}}" imagedata="{{data.images}}"></image-two>
+			<!-- 文本组件 -->
+			<text-p if="{{name === 'link-p'}}" textdata="{{data}}"></text-p>
+			<text-title if="{{name === 'link-title'}}" textdata="{{data}}"></text-title>
+		</div>
+		
+	</scroller>
+</template>
+
+<style>
+	.inputText{
+		background-color: #0f0;
+		border-width: 1;
+		border-color: purple;
+	}
+</style>
+<script>
+	require("../components/images-component/product-one.we");
+	require("../components/images-component/product-two.we");
+	require("../components/images-component/product-three.we");
+	require("../components/images-component/image-one.we");
+	require("../components/images-component/image-two.we");
+	require("../components/images-component/image-slider.we");
+	require("../components/text-component/text-title.we");
+	require("../components/text-component/text-p.we");
+	module.exports = {
+		data: {
+			deviceWidth: 750,
+			homeList:[],
+			baseURL:''
+		},
+		//相当于ready
+		created: function () {
+			// body...
+			var util = require("../../util.js");
+			this.baseURL = util.serverPath();
+			this._getData();
+		},
+
+		methods:{
+			_getData: function () {
+				var that = this;
+				var stream = require("@weex-module/stream");
+				var url = this.baseURL + '/ols/1.1/stores/biz';
+
+				stream.fetch({
+					method: 'GET',
+					url: url,
+					type: 'json'
+				}, function successed(response) {
+					// body...
+					if (response.status == 200) {
+						var dom = require('@weex-module/dom');
+						//这里需要兼容web和Native，Native需要将传递的数据JSON化
+						var data = response.data;
+						var homePage;
+
+						try{
+							data = JSON.parse(response.data);
+						}catch(e){};
+						try{
+							homePage = JSON.parse(data.homePageJson);
+						}catch(e){};
+
+						that.homeList = homePage;
+					}else{
+						//TODO  错误处理
+						console.log('请求出错', response);
+					}
+				}, function failed(err) {
+					// body...
+				});
+				
+			}
+		}
+	}
+</script>
