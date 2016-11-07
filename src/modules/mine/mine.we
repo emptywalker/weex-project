@@ -1,15 +1,166 @@
 <template>
-	<div style="background-color:red">
-		<text class='textq'>我    的</text>
+	<div style="background-color:white">
+		<div class="header">
+			<img src={{headerImage}} class="headerImage">
+			<text class="username">{{username}}</text>
+			<div class="managertip">
+				<text class="managertext">管理信息、地址</text>
+				<img src="http://pic.toomao.com/67424db6172594ca393defc6eab57703a05652ca" class="rigthImage">
+			</div>
+		</div>
+
+		<div class="module">
+			<img class="titleimg" src="http://pic.toomao.com/7715c8fa86e7241e7b56f224e35a34251a5c577c" class="headerImage">
+			<text class="title">我的订单</text>
+			<img class="rightimg" src={{rightimage}}>
+		</div>
+		<div class="module" justify-content="space-around">
+			<div repeat={{orderList}} >
+				<div class="item">
+					<img src={{image}} class="itemImg" resize="contain">
+					<text class="itemtitle">{{title}}</text>
+				</div>
+			</div>
+		</div>
+
+		<div style="height:20; background-color:#F4F4F4"></div>
+
+		<div class="module">
+			<img class="titleimg" src="http://pic.toomao.com/99ba2f62063ca92114a10d9e982f6110f3c4a4db" class="headerImage">
+			<text class="title">我的关注</text>
+			<img class="rightimg" src={{rightimage}}>
+		</div>
+
+		<div class="orderModule">
+			<img class="titleimg" src="http://pic.toomao.com/4f5cdd7237d6ac2d8104e46e5a2f5475cf5174d4" class="headerImage">
+			<text class="title">设置</text>
+			<img class="rightimg" src={{rightimage}}>
+		</div>
 	</div>
 </template>
 
 <style>
-	.textq {
-		font-size: 50;
-		color: #0f0;
-		text-align: center;
-		line-height: 500;
-		background-color: #0f0a0f;
+/*头像*/
+	.header{
+		background-color: white;
+		height: 100;
+		flex-direction: row;
+		border-bottom-color: gray;
+		border-bottom-width: 1;
 	}
+	.headerImage{
+		margin-left: 12;
+		margin-top: 10;
+		height: 80;
+		width: 80;
+		border-color: black;
+		border-width: 1;
+		border-radius: 40;
+	}
+	.username{
+		font-size: 18;
+		margin-left: 12;
+		margin-top: 40;
+		color: blue;
+	}
+	.managertip{
+		margin-left: 420;
+		/*height: 100;*/
+		width: 80;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.managertext{
+		margin-top: 40;
+		font-size: 15;
+		color: red;
+	}
+	.rigthImage{
+		margin-top: 42.5;
+		width: 15;
+		height: 15;
+	}
+	/*我的订单*/
+	.module{
+		background-color: white;
+		height: 50;
+		flex-direction: row;
+		position: relative;
+		border-bottom-color: gray;
+		border-bottom-width: 1;
+	}
+	.titleimg{
+		margin-left: 12;
+		margin-top: 10;
+		width: 30;
+		height: 30;
+	}
+	.title{
+		margin-left: 20;
+		font-size: 16;
+		color: black;
+		margin-top: 20;
+	}
+	.rightimg{
+		position: absolute;
+		margin-left: 700;
+		margin-top: 17.5;
+		width: 15;
+		height: 15;
+	}
+	/*订单状态*/
+	.orderModule{
+		background-color: white;
+		width: 750;
+		height: 50;
+		flex-direction: row;
+		
+		/*position: relative;*/
+		border-bottom-color: gray;
+		border-bottom-width: 1;
+	}
+	.item{
+		width: 80;
+		height: 50;
+	}
+	.itemImg{
+		margin-left: 10
+		width: 30;
+		height: 30;
+		
+	}
+	.itemtitle{
+		width: 80;
+		text-align: center;
+		font-size: 12;
+	}
+	/*我的关注*/
+	/*我的设置*/
 </style>
+
+<script>
+	module.exports = {
+		data:{
+			personalModel:{
+				
+			},
+			headerImage:'http://cdn.duitang.com/uploads/item/201511/28/20151128121316_JwvMm.thumb.700_0.jpeg',
+			username: "我是😁哈",
+			rightimage: "http://pic.toomao.com/67424db6172594ca393defc6eab57703a05652ca",
+			orderList:[
+				{
+					image:"http://pic.toomao.com/49ad940efe1365815dfa1a3df682e10990c81e92", 
+					title:"待付款"
+				},
+				{
+					image:"http://pic.toomao.com/a73ce624a3333257e09467c7c4013a50ebcb19fb", 
+					title:"待发货"
+				},
+				{
+					image:"http://pic.toomao.com/54dc68840bbee3c591e145816993dd8c70aeb143", 
+					title:"待收货"
+				}
+			]
+		}
+	}
+</script>
