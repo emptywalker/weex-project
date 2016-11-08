@@ -9,15 +9,15 @@
 			</div>
 		</div>
 
-		<div class="module">
+		<div class="module" moduleid="1" onclick="moduleClicked">
 			<img class="titleimg" src="http://pic.toomao.com/7715c8fa86e7241e7b56f224e35a34251a5c577c">
 			<text class="title">我的订单</text>
 			<img class="rightimg" src={{rightimage}}>
 		</div>
 		<div class="orderwrap">
 			<div class="orderModule">
-				<div repeat={{orderList}}>
-					<div class="item">
+				<div repeat={{orderList}} >
+					<div class="item" onclick="orderOnClicked" orderkind={{title}}>
 						<img src={{image}} class="itemImg" resize="contain">
 						<text class="itemtitle">{{title}}</text>
 					</div>
@@ -27,13 +27,13 @@
 
 		<div style="height:20; background-color:#F4F4F4; border-bottom-color: gray; border-bottom-width: 1;"></div>
 
-		<div class="module">
+		<div class="module" moduleID="2" onclick="moduleClicked">
 			<img class="titleimg" src="http://pic.toomao.com/99ba2f62063ca92114a10d9e982f6110f3c4a4db" class="headerImage">
 			<text class="title">我的关注</text>
 			<img class="rightimg" src={{rightimage}}>
 		</div>
 
-		<div class="module">
+		<div class="module" moduleID="3" onclick="moduleClicked">
 			<img class="titleimg" src="http://pic.toomao.com/4f5cdd7237d6ac2d8104e46e5a2f5475cf5174d4" class="headerImage">
 			<text class="title">设置</text>
 			<img class="rightimg" src={{rightimage}}>
@@ -63,7 +63,7 @@
 		font-size: 18;
 		margin-left: 12;
 		margin-top: 40;
-		color: blue;
+		color: black;
 	}
 	.managertip{
 		margin-left: 420;
@@ -131,7 +131,7 @@
 		height: 50;
 	}
 	.itemImg{
-		margin-left: 10
+		margin-left: 15
 		width: 30;
 		height: 30;
 		
@@ -168,6 +168,28 @@
 					title:"待收货"
 				}
 			]
+		},
+		methods:{
+
+			
+			orderOnClicked: function (e) {
+				// body...
+				var object = e.target.attr;
+				console.log(object);
+				console.log('this order list clicked ' + object.orderkind);
+			},
+			moduleClicked: function (e) {
+				var object = e.target.attr;
+				var moduleID = object.moduleid;
+				console.log(object);
+				if (moduleID === "1") {
+					console.log('this order list clicked 我的订单');
+				}else if (moduleID === "2") {
+					console.log('this order list clicked 关注');
+				}else if (moduleID === "3") {
+					console.log('this order list clicked 设置');
+				}
+			}
 		}
 	}
 </script>

@@ -1,15 +1,74 @@
 <template>
-	<div style="background-color:red">
-		<text class='textq'>这是我的订单</text>
+	<div style="background-color:red" class="wrap">
+		<list class="list"></list>
+		<div class="toolbar"></div>
 	</div>
 </template>
 
 <style>
-	.textq {
-		font-size: 50;
-		color: #0f0;
-		text-align: center;
-		line-height: 500;
-		background-color: #eee00f;
+	.wrap{
+		flex-direction: column;
+		/*position: relative;*/
+	}
+	.list {
+		/*height: 1284;*/
+		margin-bottom: 50;
+		background-color: blue;
+	}
+	.toolbar{
+		/*position: fixed;*/
+		height: 50;
+		background-color: white;
+		left: 50;
+		/*top: 100;*/
+		bottom: -50;
 	}
 </style>
+
+<script>
+	module.exports = {
+		data: {
+			listData: [
+				{
+					name:'我是意见商品，你是谁',
+					price: 500.0,
+					amount: 20,
+					image: 'http://imgsrc.baidu.com/forum/pic/item/7e4648a98226cffc54aa684ab8014a90f703ea4e.jpg',
+				},
+				{
+					name:'我是意见商品，你是谁',
+					price: 500.0,
+					amount: 20,
+					image: 'http://imgsrc.baidu.com/forum/pic/item/7e4648a98226cffc54aa684ab8014a90f703ea4e.jpg',
+				},
+				{
+					name:'我是意见商品，你是谁',
+					price: 500.0,
+					amount: 20,
+					image: 'http://imgsrc.baidu.com/forum/pic/item/7e4648a98226cffc54aa684ab8014a90f703ea4e.jpg',
+				},
+				{
+					name:'我是意见商品，你是谁',
+					price: 500.0,
+					amount: 20,
+					image: 'http://imgsrc.baidu.com/forum/pic/item/7e4648a98226cffc54aa684ab8014a90f703ea4e.jpg',
+				},
+				{
+					name:'我是意见商品，你是谁',
+					price: 500.0,
+					amount: 20,
+					image: 'http://imgsrc.baidu.com/forum/pic/item/7e4648a98226cffc54aa684ab8014a90f703ea4e.jpg',
+				},
+				{
+					name:'我是意见商品，你是谁',
+					price: 500.0,
+					amount: 20,
+					image: 'http://imgsrc.baidu.com/forum/pic/item/7e4648a98226cffc54aa684ab8014a90f703ea4e.jpg',
+				}
+			],
+		},
+		methods: {
+
+		}
+	}
+</script>
