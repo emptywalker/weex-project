@@ -10,20 +10,22 @@
 		</div>
 
 		<div class="module">
-			<img class="titleimg" src="http://pic.toomao.com/7715c8fa86e7241e7b56f224e35a34251a5c577c" class="headerImage">
+			<img class="titleimg" src="http://pic.toomao.com/7715c8fa86e7241e7b56f224e35a34251a5c577c">
 			<text class="title">我的订单</text>
 			<img class="rightimg" src={{rightimage}}>
 		</div>
-		<div class="module" justify-content="space-around">
-			<div repeat={{orderList}} >
-				<div class="item">
-					<img src={{image}} class="itemImg" resize="contain">
-					<text class="itemtitle">{{title}}</text>
+		<div class="orderwrap">
+			<div class="orderModule">
+				<div repeat={{orderList}}>
+					<div class="item">
+						<img src={{image}} class="itemImg" resize="contain">
+						<text class="itemtitle">{{title}}</text>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div style="height:20; background-color:#F4F4F4"></div>
+		<div style="height:20; background-color:#F4F4F4; border-bottom-color: gray; border-bottom-width: 1;"></div>
 
 		<div class="module">
 			<img class="titleimg" src="http://pic.toomao.com/99ba2f62063ca92114a10d9e982f6110f3c4a4db" class="headerImage">
@@ -31,7 +33,7 @@
 			<img class="rightimg" src={{rightimage}}>
 		</div>
 
-		<div class="orderModule">
+		<div class="module">
 			<img class="titleimg" src="http://pic.toomao.com/4f5cdd7237d6ac2d8104e46e5a2f5475cf5174d4" class="headerImage">
 			<text class="title">设置</text>
 			<img class="rightimg" src={{rightimage}}>
@@ -109,17 +111,22 @@
 		height: 15;
 	}
 	/*订单状态*/
-	.orderModule{
+	.orderwrap{
 		background-color: white;
-		width: 750;
 		height: 50;
-		flex-direction: row;
-		
-		/*position: relative;*/
 		border-bottom-color: gray;
 		border-bottom-width: 1;
 	}
+	.orderModule{
+		background-color: white;
+		margin-left: 100;
+		width: 550;
+		height: 49;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 	.item{
+		/*flex: 1;*/
 		width: 80;
 		height: 50;
 	}
